@@ -1,0 +1,23 @@
+﻿@page "/slides"
+@rendermode InteractiveServer
+
+<FluentLayout>
+    <FluentHeader>Slide Show</FluentHeader>
+    <br />
+    <FluentStack Orientation="Orientation.Vertical">
+        <div>
+            <SlideShow Images="@images" Width="400" Height="200" AutoSlideSeconds="3" />
+        </div>
+    </FluentStack>
+</FluentLayout>
+@code {
+    private readonly List<SlideshowImage> images = new();
+
+    protected override void OnInitialized()
+    {
+        for (int i = 1; i < 7; i++)
+        {
+            images.Add(new SlideshowImage(i, $"/banner/Banner{i}.png", $"Image #{i}"));
+        }
+    }
+}

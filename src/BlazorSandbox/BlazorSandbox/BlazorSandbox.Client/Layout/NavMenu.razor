@@ -1,0 +1,26 @@
+﻿@rendermode InteractiveAuto
+
+<div class="navmenu">
+    <input type="checkbox" title="Menu expand/collapse toggle" id="navmenu-toggle" class="navmenu-icon" />
+    <label for="navmenu-toggle" class="navmenu-icon"><FluentIcon Value="@(new Icons.Regular.Size20.Navigation())" Color="Color.Fill" /></label>
+    <nav class="sitenav" aria-labelledby="main-menu">
+        <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded" CustomToggle="true">
+            <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
+            <FluentNavLink Href="counter" Icon="@(new Icons.Regular.Size20.NumberSymbolSquare())" IconColor="Color.Accent">Counter</FluentNavLink>
+            <FluentNavLink Href="weather" Icon="@(new Icons.Regular.Size20.WeatherPartlyCloudyDay())" IconColor="Color.Accent">Weather</FluentNavLink>
+        
+            <FluentNavGroup Title="NuGet Packages" Icon="@(new Icons.Regular.Size20.DesignIdeas())" IconColor="Color.Accent">
+                <FluentNavGroup Title="Html Components" Icon="@(new Icons.Regular.Size20.DesignIdeas())" IconColor="Color.Accent">
+                    <FluentNavLink Href="https://github.com/marqdouj/HtmlComponents" Target="_blank" Icon="@(new Icons.Regular.Size20.Link())" IconColor="Color.Accent">Project Website</FluentNavLink>
+                    <FluentNavLink Href="avatar" Icon="@(new Icons.Regular.Size20.ImageCircle())" IconColor="Color.Accent">Avatar</FluentNavLink>
+                    <FluentNavLink Href="slides" Icon="@(new Icons.Regular.Size20.SlideArrowRight())" IconColor="Color.Accent">Slide Show</FluentNavLink>
+                </FluentNavGroup>
+            </FluentNavGroup>
+        </FluentNavMenu>
+    </nav>
+</div>
+
+@code {
+    private bool expanded = true;
+
+}
