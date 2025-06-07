@@ -1,0 +1,32 @@
+﻿@page "/colors"
+@rendermode InteractiveAuto
+
+<PageTitle>Color Picker</PageTitle>
+
+<FluentLayout>
+    <FluentHeader>Color Picker Example</FluentHeader>
+    <FluentToolbar>
+        <FluentButton OnClick="Reset">Reset</FluentButton>
+    </FluentToolbar>
+    <FluentStack Orientation="Orientation.Vertical">
+        <ColorPicker Options="@colorPickerOptions" @bind-Value="@colorValue" />
+        <FluentStack VerticalAlignment="VerticalAlignment.Center">
+            <div style="@($"height:1rem;width:1rem;border: solid 1px black;background-color:{backgroundColor};")" />
+            <FluentLabel>@colorValue</FluentLabel>
+        </FluentStack>
+    </FluentStack>
+</FluentLayout>
+
+@code {
+    private string? colorValue;
+    private string backgroundColor => string.IsNullOrWhiteSpace(colorValue) ? "Transparent" : colorValue;
+    private ColorPickerOptions colorPickerOptions = new ColorPickerOptions
+    {
+        Placeholder = "Choose a color...",
+    };
+
+    private void Reset()
+    {
+        colorValue = null;
+    }
+}
