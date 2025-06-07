@@ -7,7 +7,7 @@
         <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded" CustomToggle="true">
             <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
         
-            <FluentNavGroup Title="NuGet Packages" Icon="@(new Icons.Regular.Size20.DesignIdeas())" IconColor="Color.Accent">
+            <FluentNavGroup Title="NuGet Packages" Expanded="true" Icon="@(new Icons.Regular.Size20.DesignIdeas())" IconColor="Color.Accent">
                 <FluentNavGroup Title="C# Common" Icon="@(new Icons.Regular.Size20.DesignIdeas())" IconColor="Color.Accent">
                     <FluentNavLink Href="https://github.com/marqdouj/CLRCommon" Target="_blank" Icon="@(new Icons.Regular.Size20.Link())" IconColor="Color.Accent">Project Website</FluentNavLink>
                     <FluentNavLink Href="clr-exceptions" Icon="@(new Icons.Regular.Size20.CommentError())" IconColor="Color.Accent">Exceptions</FluentNavLink>
@@ -24,6 +24,11 @@
                     <FluentNavLink Href="https://github.com/marqdouj/HtmlComponents.FluentUI" Target="_blank" Icon="@(new Icons.Regular.Size20.Link())" IconColor="Color.Accent">Project Website</FluentNavLink>
                     <FluentNavLink Href="colors" Icon="@(new Icons.Regular.Size20.Color())" IconColor="Color.Accent">Color Picker</FluentNavLink>
                     <FluentNavLink Href="themes" Icon="@(new Icons.Regular.Size20.DarkTheme())" IconColor="Color.Accent">Theme Controls</FluentNavLink>
+                </FluentNavGroup>
+
+                <FluentNavGroup Title="Html Geolocation" Icon="@(new Icons.Regular.Size20.DesignIdeas())" IconColor="Color.Accent">
+                    <FluentNavLink Href="https://github.com/marqdouj/Geolocation" Target="_blank" Icon="@(new Icons.Regular.Size20.Link())" IconColor="Color.Accent">Project Website</FluentNavLink>
+                    <FluentNavLink Href="geolocation" Icon="@(new Icons.Regular.Size20.Globe())" IconColor="Color.Accent">Geolocation</FluentNavLink>
                 </FluentNavGroup>
             </FluentNavGroup>
 
