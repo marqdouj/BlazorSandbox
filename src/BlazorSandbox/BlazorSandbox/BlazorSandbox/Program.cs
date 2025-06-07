@@ -1,6 +1,7 @@
 using BlazorSandbox.Components;
 using Marqdouj.Html.Geolocation;
 using Marqdouj.Html.Geolocation.Models;
+using Marqdouj.HtmlComponents;
 using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddFluentUIComponents();
 
 builder.Services.AddScoped<IGeolocationService, GeolocationService>();
+builder.Services.AddScoped<IResizeObserverService, ResizeObserverService>();
 
 var app = builder.Build();
 

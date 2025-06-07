@@ -1,0 +1,117 @@
+﻿@page "/resize"
+@rendermode InteractiveAuto
+@inject IResizeObserverService ResizeObserver
+
+<PageTitle>Resize Observer</PageTitle>
+
+<FluentLayout>
+    <FluentHeader>Html ResizeObserver</FluentHeader>
+
+    <FluentStack Orientation="Orientation.Vertical">
+        <div>
+            <FluentLabel Typo="Typography.H3">Resize the browser window/splitter to see the resize event results.</FluentLabel>
+        </div>
+
+        <div id="@resizeId1" style="background-color:cadetblue;width:100%">
+            <p>Width: @(resize1Args?.Width ?? 0)</p>
+            <p>Height: @(resize1Args?.Height ?? 0)</p>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Eget dolor morbi non arcu risus quis varius. Turpis tincidunt id aliquet risus feugiat in ante. Eros donec ac odio tempor orci
+                dapibus ultrices in iaculis. Sit amet justo donec enim diam vulputate ut. Morbi blandit cursus risus at ultrices mi tempus. Sed
+                ullamcorper morbi tincidunt ornare massa eget egestas. Mi eget mauris pharetra et ultrices neque. Sit amet porttitor eget dolor
+                morbi non arcu risus quis.
+            </p>
+        </div>
+
+        <div id="@resizeId2" style="background-color:cornflowerblue;width:100%">
+            <p>Width: @(resize2Args?.Width ?? 0)</p>
+            <p>Height: @(resize2Args?.Height ?? 0)</p>
+
+            <p>
+                Neque laoreet suspendisse interdum consectetur libero id faucibus nisl tincidunt. Suspendisse faucibus interdum posuere lorem ipsum
+                dolor sit amet. Imperdiet sed euismod nisi porta lorem mollis aliquam. Malesuada proin libero nunc consequat interdum. Amet nisl purus
+                in mollis nunc sed id semper risus. Nunc sed augue lacus viverra vitae congue eu. Fermentum dui faucibus in ornare quam viverra. Ut eu
+                sem integer vitae. Interdum velit laoreet id donec ultrices tincidunt arcu non. Pellentesque dignissim enim sit amet. Scelerisque purus
+                semper eget duis at.
+            </p>
+        </div>
+
+        <FluentSplitter Orientation="Orientation.Horizontal" Panel1MinSize="25%" Style="width:100%;">
+            <Panel1>
+                <div id="@resizeId3" style="background-color:cadetblue;width:100%">
+                    <p>Width: @(resize3Args?.Width ?? 0)</p>
+                    <p>Height: @(resize3Args?.Height ?? 0)</p>
+
+                    <p>
+                        Panel 1 -  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Eget dolor morbi non arcu risus quis varius. Turpis tincidunt id aliquet risus feugiat in ante. Eros donec ac odio tempor orci
+                        dapibus ultrices in iaculis. Sit amet justo donec enim diam vulputate ut. Morbi blandit cursus risus at ultrices mi tempus. Sed
+                        ullamcorper morbi tincidunt ornare massa eget egestas. Mi eget mauris pharetra et ultrices neque. Sit amet porttitor eget dolor
+                        morbi non arcu risus quis.
+                    </p>
+                </div>
+            </Panel1>
+            <Panel2>
+                <div id="@resizeId4" style="background-color:cornflowerblue;width:100%">
+                    <p>Width: @(resize4Args?.Width ?? 0)</p>
+                    <p>Height: @(resize4Args?.Height ?? 0)</p>
+
+                    <p>
+                        Panel 2 - Neque laoreet suspendisse interdum consectetur libero id faucibus nisl tincidunt. Suspendisse faucibus interdum posuere lorem ipsum
+                        dolor sit amet. Imperdiet sed euismod nisi porta lorem mollis aliquam. Malesuada proin libero nunc consequat interdum. Amet nisl purus
+                        in mollis nunc sed id semper risus. Nunc sed augue lacus viverra vitae congue eu. Fermentum dui faucibus in ornare quam viverra. Ut eu
+                        sem integer vitae. Interdum velit laoreet id donec ultrices tincidunt arcu non. Pellentesque dignissim enim sit amet. Scelerisque purus
+                        semper eget duis at.
+                    </p>
+
+                </div>
+            </Panel2>
+        </FluentSplitter>
+    </FluentStack>
+</FluentLayout>
+
+@code {
+    private const string resizeId1 = "resizeId_1";
+    private const string resizeId2 = "resizeId_2";
+    private const string resizeId3 = "resizeId_3";
+    private const string resizeId4 = "resizeId_4";
+    private OnResizedArgs? resize1Args;
+    private OnResizedArgs? resize2Args;
+    private OnResizedArgs? resize3Args;
+    private OnResizedArgs? resize4Args;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            ResizeObserver.OnResize += OnResize;
+            await ResizeObserver.Observe(resizeId1);
+            await ResizeObserver.Observe(resizeId2);
+            await ResizeObserver.Observe(resizeId3);
+            await ResizeObserver.Observe(resizeId4);
+        }
+    }
+
+    private void OnResize(OnResizedArgs args)
+    {
+        switch (args.Id)
+        {
+            case resizeId1:
+                resize1Args = args;
+                break;
+            case resizeId2:
+                resize2Args = args;
+                break;
+            case resizeId3:
+                resize3Args = args;
+                break;
+            case resizeId4:
+                resize4Args = args;
+                break;
+        }
+
+        StateHasChanged();
+    }
+}
