@@ -1,0 +1,43 @@
+﻿@rendermode InteractiveAuto
+@inject IDialogService DialogService
+
+<FluentCard Width="450px" Height="250px">
+    <FluentLabel Typo="Typography.H5">String.ToTitleCase()</FluentLabel>
+    <p>Converts a string to title case using the specified culture (wrapper for TextInfo.ToTitleCase).</p>
+
+    <FluentStack>
+        <div>
+            <p>Value:</p>
+            <FluentTextField @bind-Value=value></FluentTextField>
+        </div>
+        <div>
+            <p>Culture:</p>
+            <FluentTextField @bind-Value=culture Style="width:5rem;"></FluentTextField>
+        </div>
+    </FluentStack>
+
+    <FluentButton Appearance="Appearance.Accent" OnClick="DoTest">Test</FluentButton>
+
+    <FluentStack>
+        <p>Result:</p>
+        <FluentLabel Style="background-color:#f1f1f1" Typo="Typography.Body">@result</FluentLabel>
+    </FluentStack>
+</FluentCard>
+
+@code {
+    private string? result;
+    private string value = "This is the test string";
+    private string culture = "en-US";
+
+    private void DoTest()
+    {
+        try
+        {
+            result = value.ToTitleCase(culture);
+        }
+        catch (Exception ex)
+        {
+            DialogService.ShowError(ex.ToMessage());
+        }
+    }
+}

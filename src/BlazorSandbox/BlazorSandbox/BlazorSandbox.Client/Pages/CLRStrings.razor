@@ -1,0 +1,24 @@
+﻿@page "/clr-strings"
+@rendermode InteractiveAuto
+@inject IDialogService DialogService
+
+<FluentLayout>
+    <FluentHeader>String Extensions</FluentHeader>
+
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentLabel Typo="Typography.H5" Style="margin:5px;">
+            The following examples demonstrate the use of the String extensions
+        </FluentLabel>
+
+        <FluentGrid>
+            <CLRStringsTruncate />
+            <CLRStringsLeft />
+            <CLRStringsRight />
+            <CLRStringsTitleCase />
+        </FluentGrid>
+    </FluentStack>
+</FluentLayout>
+
+@code {
+
+}

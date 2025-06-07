@@ -1,0 +1,96 @@
+﻿@page "/clr-exceptions"
+@rendermode InteractiveAuto
+@inject IDialogService DialogService
+
+<PageTitle>CLR Exceptions</PageTitle>
+
+<FluentLayout>
+    <FluentHeader>Exception Extensions</FluentHeader>
+
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentLabel Typo="Typography.H5">The following examples demonstrate the use of the Exception extensions</FluentLabel>
+
+        <FluentLabel>Exception Generated:</FluentLabel>
+        <code>
+            new Exception("Outer Exception.", new Exception("Inner Exception.", new Exception("Inner Inner Exception.")))
+        </code>
+
+        <FluentStack>
+            <FluentCard Width="400px" Height="200px">
+                <FluentLabel Typo="Typography.H5">Exception.ToMessage()</FluentLabel>
+                <p>Resolves all messages as a string and then displays the message in a Fluent dialog</p>
+                <FluentButton Appearance="Appearance.Accent" OnClick="ToMessageDialog">Test</FluentButton>
+                <FluentLabel Typo="Typography.Body">C# Value: @ToMessageValue</FluentLabel>
+            </FluentCard>
+
+            <FluentCard Width="400px" Height="200px">
+                <FluentLabel Typo="Typography.H5">Exception.ToMessageList()</FluentLabel>
+                <p>Resolves all messages as a List, and then displays the messages in a Fluent dialog</p>
+                <FluentButton Appearance="Appearance.Accent" OnClick="ToMessageListDialog">Test</FluentButton>
+
+                @foreach (var item in ToMessageListValue)
+                {
+                    <FluentLabel Typo="Typography.Body">C# Value: @item</FluentLabel>
+                }
+            </FluentCard>
+        </FluentStack>
+    </FluentStack>
+</FluentLayout>
+
+<style>
+    code {
+        font-family: Consolas,"courier new";
+        color: blue;
+        background-color: #f1f1f1;
+        padding: 2px;
+        font-size: 105%;
+    }
+</style>
+
+@code {
+    private Exception ex = new Exception("Outer Exception.", new Exception("Inner Exception.", new Exception("Inner Inner Exception.")));
+    private string ToMessageValue = "";
+    private List<string> ToMessageListValue = [];
+
+    private async Task ToMessageDialog()
+    {
+        try
+        {
+            throw ex;
+        }
+        catch (Exception ex)
+        {
+            ToMessageValue = ex.ToMessage();
+
+            await DialogService.ShowErrorAsync(GetDialogMessage(ToMessageValue.Split("\n")));
+        }
+    }
+
+    private async Task ToMessageListDialog()
+    {
+        try
+        {
+            throw ex;
+        }
+        catch (Exception ex)
+        {
+            ToMessageListValue = ex.ToMessageList();
+
+            await DialogService.ShowErrorAsync(GetDialogMessage(ex.ToMessageList()));
+        }
+    }
+
+    private string GetDialogMessage(IEnumerable<string> items)
+    {
+        var text = new System.Text.StringBuilder();
+
+        foreach (var msg in items)
+        {
+            text.Append("<p>");
+            text.Append(msg);
+            text.Append("</p>");
+        }
+
+        return text.ToString();
+    }
+}

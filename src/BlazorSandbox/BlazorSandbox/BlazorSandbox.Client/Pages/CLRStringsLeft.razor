@@ -1,0 +1,43 @@
+﻿@rendermode InteractiveAuto
+@inject IDialogService DialogService
+
+<FluentCard Width="450px" Height="250px">
+    <FluentLabel Typo="Typography.H5">String.Left()</FluentLabel>
+    <p>Returns a string containing a specified number of characters from the left side of a string</p>
+
+    <FluentStack>
+        <div>
+            <p>Value:</p>
+            <FluentTextField @bind-Value=truncateValue></FluentTextField>
+        </div>
+        <div>
+            <p>Length:</p>
+            <FluentNumberField @bind-Value=length Style="width:5rem;"></FluentNumberField>
+        </div>
+    </FluentStack>
+
+    <FluentButton Appearance="Appearance.Accent" OnClick="DoLeft">Test</FluentButton>
+
+    <FluentStack>
+        <p>Truncated Value:</p>
+        <FluentLabel Style="background-color:#f1f1f1" Typo="Typography.Body">@truncatedValue</FluentLabel>
+    </FluentStack>
+</FluentCard>
+
+@code {
+    private string? truncatedValue;
+    private string truncateValue = "This is the test string";
+    private int length = 11;
+
+    private void DoLeft()
+    {
+        try
+        {
+            truncatedValue = truncateValue.Left(length);
+        }
+        catch (Exception ex)
+        {
+            DialogService.ShowError(ex.ToMessage());
+        }
+    }
+}
