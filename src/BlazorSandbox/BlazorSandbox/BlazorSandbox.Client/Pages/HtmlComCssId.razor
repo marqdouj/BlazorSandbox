@@ -1,0 +1,55 @@
+﻿@page "/html-com-css-id"
+@rendermode InteractiveAuto
+
+<PageTitle>Html Common - Css Id</PageTitle>
+
+<FluentLayout>
+    <FluentHeader>Html Common - Css Id</FluentHeader>
+
+    <FluentCard>
+        <FluentLabel Typo="Typography.Subject">Create Css Id from Guid</FluentLabel>
+        <br />
+        <p>
+            I like to use Guids as my css id.<br />
+            However, not all Guids start with a letter.
+            If they start with a number then the first character in the css id must be escaped.<br />
+            Rather than checking for this and prefixing an escape character ('\'),
+            I find it simpler to just prefix the value with a letter.<br />
+            I have added a Guid extension method to do that; 
+            <span style="font-weight:bold">id = Guid.NewGuid().ToCssId(prefix).</span><br />
+            Note: If you don't supply a prefix, the default is 'g_'.
+        </p>
+        <FluentStack VerticalAlignment="VerticalAlignment.Center">
+            <FluentLabel>Prefix:</FluentLabel>
+            <FluentTextField @bind-Value=prefix></FluentTextField>
+            <FluentButton Appearance="Appearance.Accent" @onclick="CreateCssId">Create Css Id</FluentButton>
+        </FluentStack>
+        <FluentLabel>Result: @result</FluentLabel>
+        <br />
+        <FluentLabel>@message</FluentLabel>
+    </FluentCard>
+</FluentLayout>
+
+@code {
+    private string prefix = "";
+    private string? result;
+    private string? message;
+
+    private void CreateCssId()
+    {
+        try
+        {
+            message = "";
+            if (string.IsNullOrWhiteSpace(prefix))
+                result = Guid.NewGuid().ToCssId();
+            else
+                result = Guid.NewGuid().ToCssId(prefix);
+        }
+        catch (Exception ex)
+        {
+            message = ex.ToMessage();
+        }
+
+        StateHasChanged();
+    }
+}
