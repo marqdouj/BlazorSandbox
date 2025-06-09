@@ -2,6 +2,7 @@ using BlazorSandbox.Components;
 using Marqdouj.Html.Geolocation;
 using Marqdouj.Html.Geolocation.Models;
 using Marqdouj.HtmlComponents;
+using Marqdouj.JSLogger;
 using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,13 @@ builder.Services.AddFluentUIComponents();
 
 builder.Services.AddScoped<IGeolocationService, GeolocationService>();
 builder.Services.AddScoped<IResizeObserverService, ResizeObserverService>();
+
+/*
+For the purpose of this demo, both type of loggers are configured. 
+normally you would only configure one type of logger service.
+*/
+builder.AddLoggerModule(null);
+builder.AddLoggerService(null); /*See `App.Razor` for how to add the global script required for this service */
 
 var app = builder.Build();
 

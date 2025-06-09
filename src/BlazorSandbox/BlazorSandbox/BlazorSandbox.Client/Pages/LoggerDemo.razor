@@ -1,0 +1,162 @@
+﻿@page "/js-logger"
+@rendermode InteractiveAuto
+@inject IJSLogger<LoggerDemo> JSLogger
+@inject IJSLoggerService<LoggerDemo> JSLoggerS
+
+<FluentLayout>
+    <FluentHeader>JS Logger</FluentHeader>
+
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentStack Orientation="Orientation.Vertical">
+            <FluentLabel Typo="Typography.H5">This page demonstrates the JavaScript Logger </FluentLabel>
+            <FluentLabel Typo="Typography.H5" >Open the 'Developer Tools' to view the output in the browser console</FluentLabel>
+            <FluentLabel>
+                For the purpose of this demo, both type of loggers are configured.
+                Normally you would only configure one type of logger service (see Program.cs).
+            </FluentLabel>
+
+            <FluentAnchor Href="https://www.nuget.org/packages/Marqdouj.JSLogger/"
+                          Target="_blank">
+                NuGet
+            </FluentAnchor>
+            <FluentAnchor Href="https://github.com/marqdouj/JSLogger"
+                          Target="_blank">
+                GitHub
+            </FluentAnchor>
+        </FluentStack>
+
+        <FluentCard>
+            <FluentLabel>Using JSLogger (IJSObjectReference)</FluentLabel>
+
+            <FluentToolbar>
+                <FluentButton @onclick="(() => TestLogger())">Test All</FluentButton>
+                <FluentSpacer />
+                <FluentButton @onclick="(() => TestRaw())">Test Raw</FluentButton>
+                <FluentButton @onclick="(() => TestScope())">Test Scope</FluentButton>
+                <FluentSpacer />
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Trace))">Trace</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Debug))">Debug</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Information))">Information</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Warning))">Warning</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Error))">Error</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Critical))">Critical</FluentButton>
+            </FluentToolbar>
+        </FluentCard>
+
+        <FluentCard>
+            <FluentLabel>Using JSLoggerService (IJSRuntime)</FluentLabel>
+            <FluentToolbar>
+                <FluentButton @onclick="(() => TestLogger(true))">Test All</FluentButton>
+                <FluentSpacer />
+                <FluentButton @onclick="(() => TestRaw(true))">Test Raw</FluentButton>
+                <FluentButton @onclick="(() => TestScope(true))">Test Scope</FluentButton>
+                <FluentSpacer />
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Trace, true))">Trace</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Debug, true))">Debug</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Information, true))">Information</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Warning, true))">Warning</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Error, true))">Error</FluentButton>
+                <FluentButton @onclick="(() => TestLogger(LogLevel.Critical, true))">Critical</FluentButton>
+            </FluentToolbar>
+        </FluentCard>
+    </FluentStack>
+</FluentLayout>
+
+@code {
+    protected override void OnInitialized()
+    {
+        JSLogger.Config.SetLevel(LogLevel.Trace, LogLevel.Critical);
+        JSLoggerS.Config.SetLevel(LogLevel.Trace, LogLevel.Critical);
+    }
+
+    private async Task TestRaw(bool useService = false)
+    {
+        if (useService)
+        {
+            await JSLoggerS.LogRaw("Test 'Raw' from Global Script", "color: orange; font-size: 20px;");
+        }
+        else
+        {
+            await JSLogger.LogRaw("Test 'Raw' from Module", "color: orange; font-size: 20px;");
+        }
+    }
+
+    private void TestScope(bool useService = false)
+    {
+        IJSLogger logger;
+        string source;
+
+        if (useService)
+        {
+            logger = JSLoggerS;
+            source = "Global Script";
+        }
+        else
+        {
+            logger = JSLogger;
+            source = "Module";
+        }
+
+        using (var scope = logger.BeginScope("TestScope"))
+        {
+            var t = DateTime.Now.ToShortTimeString();
+            logger.LogInformation($"'Test Scope 1 of 3' from {source} : {t}");
+            logger.LogInformation($"'Test Scope 2 of 3' from {source} : {t}");
+            logger.LogInformation($"'Test Scope 3 of 3' from {source} : {t}");
+        }
+    }
+
+    private async Task TestLogger(bool useService = false)
+    {
+        if (useService)
+        {
+            await JSLoggerS.LogRaw("Test 'Raw' from Global Script", "color: orange; font-size: 20px;");
+            await JSLoggerS.Test("Test All from Global Script");
+        }
+        else
+        {
+            await JSLogger.LogRaw("Test 'Raw' from Module", "color: orange; font-size: 20px;");
+            await JSLogger.Test("Test All from Module");
+        }
+    }
+
+    private async Task TestLogger(LogLevel level, bool useService = false)
+    {
+        IJSLogger logger = useService ? JSLoggerS : JSLogger;
+        var source = useService ? "Global Script" : "Module";
+        var eventName = $"TestLogger-{source}";
+
+        switch (level)
+        {
+            case LogLevel.Trace:
+                await logger.LogTrace("Trace message from logger demo page.", eventName);
+                break;
+            case LogLevel.Debug:
+                await logger.LogDebug("Debug message from logger demo page.", eventName);
+                break;
+            case LogLevel.Information:
+                await logger.LogInformation("Information message from logger demo page.", eventName);
+                break;
+            case LogLevel.Warning:
+                await logger.LogWarning("Warning message from logger demo page.", eventName);
+                break;
+            case LogLevel.Error:
+                await logger.LogError("Error message from logger demo page.", eventName);
+                try
+                {
+                    throw new Exception("try/catch Exception from logger demo page.");
+                }
+                catch (Exception ex)
+                {
+                    await logger.LogError(ex, eventName);
+                }
+
+                break;
+            case LogLevel.Critical:
+                await logger.LogCritical("Critical message from logger demo page.", eventName);
+                break;
+            default:
+                break;
+        }
+    }
+}
