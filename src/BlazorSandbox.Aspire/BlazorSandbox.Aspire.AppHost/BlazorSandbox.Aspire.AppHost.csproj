@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.3.0" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>9297e995-4331-4bc3-a751-da7ad7b11a00</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorSandbox.Aspire.ApiService\BlazorSandbox.Aspire.ApiService.csproj" />
+    <ProjectReference Include="..\BlazorSandbox.Aspire.WebApp\BlazorSandbox.Aspire.WebApp\BlazorSandbox.Aspire.WebApp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.0" />
+    <PackageReference Include="Marqdouj.MailDev.Host" Version="8.1.2" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+@BlazorSandbox.Aspire.ApiService_HostAddress = http://localhost:5055
+
+GET {{BlazorSandbox.Aspire.ApiService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

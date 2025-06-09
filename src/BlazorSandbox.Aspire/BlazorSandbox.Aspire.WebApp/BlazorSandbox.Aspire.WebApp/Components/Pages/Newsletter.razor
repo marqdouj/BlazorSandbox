@@ -1,0 +1,68 @@
+﻿@inject IApiServiceClient ApiService
+
+<div>
+    @if (subscribed)
+    {
+        <FluentButton Appearance="Appearance.Accent"
+        IconEnd="@(new Icons.Filled.Size20.News())"
+        @onclick="Unsubscribe"
+        Title="Unsubscribe from Newsletter">
+            Unsubscribe
+        </FluentButton>
+    }
+    else
+    {
+        <FluentButton Appearance="Appearance.Accent"
+        IconEnd="@(new Icons.Regular.Size20.News())"
+        @onclick="Subscribe"
+        Title="Subscribe to Newsletter">
+            Subscribe
+        </FluentButton>
+    }
+</div>
+@code {
+    private bool subscribed;
+    private string email = "";
+
+    [Parameter, EditorRequired]
+    public EventCallback<bool> SubscribeChanged { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetEmail();
+        await CheckSubscription();
+        await SubscribeChanged.InvokeAsync(subscribed);
+    }
+
+    private async Task GetEmail()
+    {
+        await Task.CompletedTask;
+        //TODO: add logic to get email from user
+        email = "user@test.com";
+    }
+
+    private async Task CheckSubscription()
+    {
+        subscribed = await ApiService.Newsletter.IsSubscribedToNewsletterAsync(email);
+    }
+    
+    private async Task Subscribe()
+    {
+        if (subscribed) return;
+
+        await ApiService.Newsletter.SubscribeToNewsletterAsync(email);
+        subscribed = true;
+
+        await SubscribeChanged.InvokeAsync(subscribed);
+    }
+
+    private async Task Unsubscribe()
+    {
+        if (subscribed is false) return;
+
+        await ApiService.Newsletter.UnSubscribeToNewsletterAsync(email);
+        subscribed = false;
+
+        await SubscribeChanged.InvokeAsync(subscribed);
+    }
+}

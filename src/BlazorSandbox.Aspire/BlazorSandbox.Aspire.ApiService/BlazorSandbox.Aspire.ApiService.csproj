@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Communication.Email" Version="1.1.0-beta.2" />
+    <PackageReference Include="Marqdouj.Aspire.MailKit.Client" Version="8.1.4" />
+    <PackageReference Include="Marqdouj.CLRCommon" Version="8.8.3" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0-preview.5.25277.114" />
+	<PackageReference Include="Scalar.AspNetCore" Version="2.4.13" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorSandbox.Aspire.ApiClient\BlazorSandbox.Aspire.ApiClient.csproj" />
+    <ProjectReference Include="..\BlazorSandbox.Aspire.ServiceDefaults\BlazorSandbox.Aspire.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>

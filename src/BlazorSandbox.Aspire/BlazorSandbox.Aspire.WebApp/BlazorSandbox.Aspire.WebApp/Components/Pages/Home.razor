@@ -1,0 +1,28 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<FluentLayout>
+    <FluentHeader>Welcome to my Blazor Aspire demo.</FluentHeader>
+
+    <FluentCard>
+        <FluentLabel Typo="Typography.H5">Open API</FluentLabel>
+        <br />
+        <FluentLabel Typo="Typography.Subject">
+            Both Scalar and Swagger are configured for Open API.<br />
+            In the Aspire dashboard, Scalar is the default. <br />
+            You can use either of the following links to launch the configurations:
+        </FluentLabel>
+        <br />
+        <FluentAnchor Appearance="Appearance.Accent" Href="https://localhost:7138/scalar" Target="_blank">
+            Scalar
+        </FluentAnchor>
+        <FluentAnchor Appearance="Appearance.Accent" Href="https://localhost:7138/swagger" Target="_blank">
+            Swagger
+        </FluentAnchor>
+        <br /><br />
+        <FluentAnchor Appearance="Appearance.Accent" Href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/using-openapi-documents?view=aspnetcore-10.0" Target="_blank">
+            Open API Docs
+        </FluentAnchor>
+    </FluentCard>
+</FluentLayout>

@@ -1,0 +1,80 @@
+﻿@page "/email"
+
+@rendermode InteractiveServer
+@inject IApiServiceClient ApiService
+
+<PageTitle>Email Service</PageTitle>
+
+<FluentLayout>
+    <FluentHeader>Email Service</FluentHeader>
+
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentLabel Typo="Typography.H5">
+            This page demonstrates a development mode email service using MailDev/MailKit.
+            I have created RCL wrappers around them to work with .NET Aspire
+        </FluentLabel>
+        <br />
+        <FluentGrid>
+            <FluentAnchor Href="https://www.nuget.org/packages/Marqdouj.MailDev.Host/"
+                          Target="_blank">
+                NuGet MailDev
+            </FluentAnchor>
+            <FluentAnchor Href="https://github.com/marqdouj/Marqdouj.MailDev"
+                          Target="_blank">
+                GitHub MailDev
+            </FluentAnchor>
+            <FluentAnchor Href="https://www.nuget.org/packages/Marqdouj.Aspire.MailKit.Client/"
+                          Target="_blank">
+                NuGet MailKit
+            </FluentAnchor>
+            <FluentAnchor Href="https://github.com/marqdouj/Marqdouj.MailKit"
+                          Target="_blank">
+                GitHub MailKit
+            </FluentAnchor>
+        </FluentGrid>
+
+        <br />
+
+        <FluentLabel Typo="Typography.H5">Open up the <code>'MailDev'</code> resource to view emails</FluentLabel>
+        <FluentLabel Typo="Typography.H5">
+            The code behind is also configured to run Azure email in production (if configured).
+        </FluentLabel>
+
+        <br />
+
+        <FluentCard>
+            <FluentLabel Typo="Typography.Subject">Email Service (Newsletter)</FluentLabel>
+            <br />
+            <FluentLabel>@subscribedMessage</FluentLabel>
+            <Newsletter SubscribeChanged="@OnSubscribeChanged" />
+        </FluentCard>
+
+        <FluentCard>
+            <FluentLabel Typo="Typography.Subject">Email Service (API Exception Handling)</FluentLabel>
+            <br />
+            <FluentLabel>
+                The ApiService <code>Program.cs</code> contains a custom exception handler that
+                uses the email service to send messages to the development team when an unhandled
+                exception occurs in the API.
+                <br /><br />
+                This can be tested by using one of the OpenAPI configurations (see Home page) and testing the <code>/development/throw-exception</code> endpoint.
+            </FluentLabel>
+            <br />
+        </FluentCard>
+    </FluentStack>
+</FluentLayout>
+
+<FluentStack Orientation="Orientation.Vertical">
+
+</FluentStack>
+
+@code {
+    private bool subscribed;
+    private string subscribedMessage => subscribed ? "Thank you for subscribing to our newsletter." : "Please subscribe to our newsletter.";
+
+    private void OnSubscribeChanged(bool value)
+    {
+        subscribed = value;
+        StateHasChanged();
+    }
+}

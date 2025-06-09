@@ -1,0 +1,31 @@
+﻿@page "/weather"
+@attribute [StreamRendering]
+@attribute [OutputCache(Duration = 5)]
+
+@inject IApiServiceClient ApiService
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data loaded from a backend API service.</p>
+
+<!-- This page is rendered in SSR mode, so the FluentDataGrid component does not offer any interactivity (like sorting). -->
+<FluentDataGrid Id="weather-grid" Items="@forecasts" GridTemplateColumns="1fr 1fr 1fr 2fr" Loading="@(forecasts == null)" Style="height:204px;" TGridItem="WeatherForecast">
+    <PropertyColumn Title="Date" Property="@(c => c!.Date)" Align="Align.Start"/>
+    <PropertyColumn Title="Temp. (C)" Property="@(c => c!.TemperatureC)" Align="Align.Center"/>
+    <PropertyColumn Title="Temp. (F)" Property="@(c => c!.TemperatureF)" Align="Align.Center"/>
+    <PropertyColumn Title="Summary" Property="@(c => c!.Summary)" Align="Align.End"/>
+</FluentDataGrid>
+
+@code {
+    private IQueryable<WeatherForecast>? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(300);
+
+        forecasts = (await ApiService.Weather.GetWeatherAsync()).AsQueryable();
+    }
+}
