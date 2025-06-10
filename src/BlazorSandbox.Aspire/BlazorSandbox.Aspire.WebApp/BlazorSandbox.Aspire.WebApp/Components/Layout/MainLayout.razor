@@ -2,7 +2,10 @@
 
 <FluentLayout>
     <FluentHeader>
-        BlazorSandbox.Aspire.WebApp
+        <FluentStack VerticalAlignment="VerticalAlignment.Center">
+            <CircleImage Source="https://avatars.githubusercontent.com/u/16510416" />
+            Blazor Aspire Demo
+        </FluentStack>
     </FluentHeader>
     <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
         <NavMenu />
@@ -13,9 +16,11 @@
         </FluentBodyContent>
     </FluentStack>
     <FluentFooter>
-        <a href="https://www.fluentui-blazor.net" target="_blank">Documentation and demos</a>
+        <a href="https://www.fluentui-blazor.net" target="_blank">Fluent Blazor</a>
         <FluentSpacer />
-        <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor" target="_blank">About Blazor</a>
+        <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor" target="_blank">Blazor</a>
+        <FluentSpacer />
+        <span>@copyright</span>
     </FluentFooter>
 </FluentLayout>
 
@@ -24,3 +29,7 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    private string copyright { get; } = $"© Douglas Marquardt {DateTime.Today.Year}";
+}

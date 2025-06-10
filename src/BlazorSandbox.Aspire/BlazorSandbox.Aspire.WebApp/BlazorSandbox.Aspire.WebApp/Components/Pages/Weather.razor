@@ -8,7 +8,12 @@
 
 <h1>Weather</h1>
 
-<p>This component demonstrates showing data loaded from a backend API service.</p>
+<FluentLabel Typo="Typography.H5">This component demonstrates showing data loaded from a backend API service.</FluentLabel>
+<br />
+<FluentLabel Typo="Typography.Body">
+    The output cache has been set to 5 seconds. Refresh the page and the values should only update after 
+    5 seconds from when the values were first loaded.
+</FluentLabel>
 
 <!-- This page is rendered in SSR mode, so the FluentDataGrid component does not offer any interactivity (like sorting). -->
 <FluentDataGrid Id="weather-grid" Items="@forecasts" GridTemplateColumns="1fr 1fr 1fr 2fr" Loading="@(forecasts == null)" Style="height:204px;" TGridItem="WeatherForecast">
