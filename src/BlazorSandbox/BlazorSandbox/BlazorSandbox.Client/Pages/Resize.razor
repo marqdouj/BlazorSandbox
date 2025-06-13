@@ -87,10 +87,15 @@
         if (firstRender)
         {
             ResizeObserver.OnResize += OnResize;
-            await ResizeObserver.Observe(resizeId1);
-            await ResizeObserver.Observe(resizeId2);
-            await ResizeObserver.Observe(resizeId3);
-            await ResizeObserver.Observe(resizeId4);
+
+            //Old Method
+            // await ResizeObserver.Observe(resizeId1);
+            // await ResizeObserver.Observe(resizeId2);
+            // await ResizeObserver.Observe(resizeId3);
+            // await ResizeObserver.Observe(resizeId4);
+
+            //New method
+            await ResizeObserver.Observe(new List<string> { resizeId1, resizeId2, resizeId3, resizeId4 });
         }
     }
 
